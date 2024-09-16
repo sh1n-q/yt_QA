@@ -16,5 +16,5 @@ jobs:
           lfs: true
       - name: Push to hub
         env: 
-          HF: ${{ secrets.HG }}
+          HG: ${{ secrets.HG }}
         run: git push --force https://Pugna:$HG@huggingface.co/spaces/Pugna/query_yt main
