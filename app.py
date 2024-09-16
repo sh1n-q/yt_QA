@@ -8,10 +8,8 @@ import os
 import re
 
 # Environment variables for API keys
-openai_api_key = os.getenv('OPENAI_KEY')
-activeloop_token = os.getenv('ACTIVELOOP_TOKEN')
-os.environ['OPENAI_API_KEY'] = openai_api_key
-os.environ["ACTIVELOOP_TOKEN"] = activeloop_token
+os.environ['OPENAI_API_KEY'] 
+os.environ["ACTIVELOOP_TOKEN"]
 
 
 llm = ChatOpenAI(model="gpt-4o-mini")
