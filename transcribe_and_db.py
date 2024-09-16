@@ -1,3 +1,4 @@
+
 import yt_dlp
 import whisper
 from langchain_openai import OpenAIEmbeddings
@@ -34,39 +35,40 @@ def download_mp4_from_youtube(urls, job_id):
 
     return video_info
 
-urls=["https://www.youtube.com/watch?v=3YgcoCbVMrI", # 8:40
-    "https://www.youtube.com/watch?v=SF2OPcHN3YU", # 12 min; vacuums
-      "https://www.youtube.com/watch?v=x9Gx2YT6tSg", # 13:31; vs
-      "https://www.youtube.com/watch?v=dS0oFmzU06g"] # 6 min; fan
-vides_details = download_mp4_from_youtube(urls, 1)
+if __name__ == "__main__":
+    urls=["https://www.youtube.com/watch?v=3YgcoCbVMrI", # 8:40
+        "https://www.youtube.com/watch?v=SF2OPcHN3YU", # 12 min; vacuums
+        "https://www.youtube.com/watch?v=x9Gx2YT6tSg", # 13:31; vs
+        "https://www.youtube.com/watch?v=dS0oFmzU06g"] # 6 min; fan
+    vides_details = download_mp4_from_youtube(urls, 1)
 
-# --- << transcribing >>
+    # --- << transcribing >>
 
-model = whisper.load_model("base")
+    model = whisper.load_model("base")
 
-results = []
-for video in vides_details:
-    result = model.transcribe(video[0])
-    results.append( result['text'] )
-    print(f"Transcription for {video[0]}:\n{result['text']}\n") # debug
+    results = []
+    for video in vides_details:
+        result = model.transcribe(video[0])
+        results.append( result['text'] )
+        print(f"Transcription for {video[0]}:\n{result['text']}\n") # debug
 
-with open('text.txt', 'w') as file:
-    file.write("\n\n".join(results))
+    with open('text.txt', 'w') as file:
+        file.write("\n\n".join(results))
 
-with open('text.txt') as f:
-    text = f.read()
+    with open('text.txt') as f:
+        text = f.read()
 
-text_splitter = RecursiveCharacterTextSplitter(
-    chunk_size=1500,
-    chunk_overlap=150,
-    separators=["\n\n", " ", ",", "\n"] 
-)
+    text_splitter = RecursiveCharacterTextSplitter(
+        chunk_size=1500,
+        chunk_overlap=150,
+        separators=["\n\n", " ", ",", "\n"] 
+    )
 
-texts = text_splitter.split_text(text)
-docs = [Document(page_content=t) for t in texts]
+    texts = text_splitter.split_text(text)
+    docs = [Document(page_content=t) for t in texts]
 
-embeddings = OpenAIEmbeddings(model='text-embedding-ada-002')
-dataset_path = f"hub://{my_activeloop_org_id}/{dataset_name}"
+    embeddings = OpenAIEmbeddings(model='text-embedding-ada-002')
+    dataset_path = f"hub://{my_activeloop_org_id}/{dataset_name}"
 
-db = DeepLake(dataset_path=dataset_path, embedding=embeddings)
-db.add_documents(docs)
+    db = DeepLake(dataset_path=dataset_path, embedding=embeddings)
+    db.add_documents(docs)
