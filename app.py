@@ -8,8 +8,12 @@ import os
 import re
 
 # Environment variables for API keys
-os.environ['OPENAI_API_KEY'] 
-os.environ["ACTIVELOOP_TOKEN"]
+OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
+ACTIVELOOP_TOKEN = os.getenv('ACTIVELOOP_TOKEN')
+if OPENAI_API_KEY is None:
+    raise ValueError("OPENAI_API_KEY is not set in the environment variables")
+if ACTIVELOOP_TOKEN is None:
+    raise ValueError("ACTIVELOOP_TOKEN is not set in the environment variables")
 
 
 llm = ChatOpenAI(model="gpt-4o-mini")
