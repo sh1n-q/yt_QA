@@ -1,0 +1,7 @@
+langchain 
+langchain-openai
+langchain-community
+deeplake
+yt-dlp
+whisper
+gradio
