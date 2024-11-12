@@ -1,8 +1,8 @@
 import gradio as gr
 from langchain_openai import ChatOpenAI
-from langchain import PromptTemplate
-from langchain.vectorstores import DeepLake
-from langchain.embeddings.openai import OpenAIEmbeddings
+from langchain_core.prompts import PromptTemplate
+from langchain_community.vectorstores import DeepLake
+from langchain_community.embeddings import OpenAIEmbeddings
 from langchain.chains import RetrievalQA
 import os
 import re
