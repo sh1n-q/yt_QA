@@ -2,7 +2,7 @@ langchain
 langchain-openai
 langchain-community
 langchain-core
-"deeplake[enterprise]"
+deeplake[enterprise]
 yt-dlp
 whisper
 gradio
